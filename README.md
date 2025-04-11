@@ -5,5 +5,6 @@ Ferramentas usadas:
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original-wordmark.svg" />
 
           
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original-wordmark.svg" />
+
+            <i class="devicon-spring-original colored"></i>
           
