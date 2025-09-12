@@ -7,7 +7,6 @@ import br.com.alura.screenmatch.service.ConsumoApi;
 import br.com.alura.screenmatch.service.ConverteDados;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class PrincipalMenu {
         private final ConverteDados conversor = new ConverteDados();
@@ -79,8 +78,7 @@ public class PrincipalMenu {
                 temporadas.forEach(System.out::println);
         }
     private void listarSeriesBuscadas(){
-        List<Serie> series;
-        series = new ArrayList<>();
+        List<Serie> series = new ArrayList<>();
         series = seriesBuscadas.stream()
                 .map(Serie::new)
                 .toList();
