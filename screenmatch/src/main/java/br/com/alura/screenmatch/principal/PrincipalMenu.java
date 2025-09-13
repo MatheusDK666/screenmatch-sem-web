@@ -1,5 +1,6 @@
 package br.com.alura.screenmatch.principal;
 
+import br.com.alura.screenmatch.Repository.SerieRepository;
 import br.com.alura.screenmatch.model.DadosSerie;
 import br.com.alura.screenmatch.model.DadosTemporada;
 import br.com.alura.screenmatch.model.Serie;
@@ -16,7 +17,13 @@ public class PrincipalMenu {
         private final Scanner leitor = new Scanner(System.in);
         private final List<DadosSerie> seriesBuscadas = new ArrayList<>();
 
-        public void exibeMenu() {
+        private final SerieRepository repositorio;
+
+    public PrincipalMenu(SerieRepository repositorio) {
+        this.repositorio = repositorio;
+    }
+
+    public void exibeMenu() {
                 var escolha = -1;
                 System.out.println("Bem vindo ao ScreenMatch!");
                 while (escolha != 0) {
@@ -54,7 +61,9 @@ public class PrincipalMenu {
 
         private void buscarSerieWeb() {
                 DadosSerie dados = getDadosSerie();
-                seriesBuscadas.add(dados);
+                Serie serie = new Serie(dados);
+                //seriesBuscadas.add(dados);
+                repositorio.save(serie);
                 System.out.println(dados);
         }
 
@@ -62,8 +71,7 @@ public class PrincipalMenu {
                 System.out.println("Digite o nome da série:");
                 String nomeSerie = leitor.nextLine();
                 String json = consumo.obterDados(ENDERECO + nomeSerie.replace(" ", "+") + API_KEY);
-                DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
-                return dados;
+                return conversor.obterDados(json, DadosSerie.class);
         }
 
         private void buscarEpisodioPorSerie() {
@@ -78,10 +86,7 @@ public class PrincipalMenu {
                 temporadas.forEach(System.out::println);
         }
     private void listarSeriesBuscadas(){
-        List<Serie> series = new ArrayList<>();
-        series = seriesBuscadas.stream()
-                .map(Serie::new)
-                .toList();
+        List<Serie> series = repositorio.findAll();
         series.stream()
                 .sorted(Comparator.comparing(Serie::getGenero))
                 .forEach(System.out::println);

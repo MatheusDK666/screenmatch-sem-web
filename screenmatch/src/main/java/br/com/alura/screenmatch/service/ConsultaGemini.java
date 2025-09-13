@@ -8,7 +8,7 @@ public class ConsultaGemini {
     public static String obterTraducao(String texto) {
 
         ChatLanguageModel gemini = GoogleAiGeminiChatModel.builder()
-                .apiKey("AIzaSyBuwuks3xS6t-fhgBRs0jE2BagHDJvwyYM")
+                .apiKey(System.getenv("GEMINI_APIKEY"))
                 .modelName("gemini-1.5-flash")
                 .build();
 
